@@ -5,6 +5,8 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const { Pool } = require("pg");
 const userRoutes = require("./auth_routes/authRoutes");
+const projectsRoutes = require("./routes/projectsRoutes");
+const attendanceRoutes = require("./routes/attendanceRoutes");
 
 const app = express();
 
@@ -12,6 +14,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
 
 // ====== DATABASE CONNECTION ======
 const pool = new Pool({
@@ -32,6 +35,10 @@ app.use("/api", userRoutes);
 app.get("/", (req, res) => {
   res.send("Backend running securely with JWT authentication!");
 });
+
+app.use("/api/projects", projectsRoutes);
+app.use("/api/attendance", attendanceRoutes);
+
 
 // ====== SERVER START ======
 const PORT = process.env.PORT || 5000;
