@@ -4,9 +4,12 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const { Pool } = require("pg");
+
 const userRoutes = require("./auth_routes/authRoutes");
 const projectsRoutes = require("./routes/projectsRoutes");
 const attendanceRoutes = require("./routes/attendanceRoutes");
+const overtimeRoutes = require("./routes/overtimeRoutes");
+const payrollRoutes = require("./routes/payrollRoutes");
 
 const app = express();
 
@@ -35,9 +38,12 @@ app.use("/api", userRoutes);
 app.get("/", (req, res) => {
   res.send("Backend running securely with JWT authentication!");
 });
+app.get("/", (req, res) => res.send("Payroll API is running..."));
 
 app.use("/api/projects", projectsRoutes);
 app.use("/api/attendance", attendanceRoutes);
+app.use("/api/overtime", overtimeRoutes);
+app.use("/api/payroll", payrollRoutes);
 
 
 // ====== SERVER START ======

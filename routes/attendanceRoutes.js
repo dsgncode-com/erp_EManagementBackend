@@ -135,4 +135,27 @@ router.get("/month/:month/:year", async (req, res) => {
   }
 });
 
+
+//task 
+
+router.post("/task", async (req, res) => {
+  const { user_id, task } = req.body;
+  const today = new Date().toISOString().split("T")[0];
+
+  console.log("Received data:", req.body);
+
+  try {
+    const result = await pool.query(
+      `INSERT INTO daily_tasks (user_id, task, date_submitted)
+       VALUES ($1, $2, $3)
+       RETURNING *`,
+      [user_id, task, today]
+    );
+    res.status(201).json({ message: "Task submitted successfully!", task: result.rows[0] });
+  } catch (err) {
+    console.error("SQL Error:", err);  // <-- keep this full object
+    res.status(500).json({ message: "Failed to save task." });
+  }
+});
+
 module.exports = router;
