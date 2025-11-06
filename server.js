@@ -10,6 +10,7 @@ const projectsRoutes = require("./routes/projectsRoutes");
 const attendanceRoutes = require("./routes/attendanceRoutes");
 const overtimeRoutes = require("./routes/overtimeRoutes");
 const payrollRoutes = require("./routes/payrollRoutes");
+const profileRoutes = require("./routes/profileRoutes");
 
 const app = express();
 
@@ -44,6 +45,9 @@ app.use("/api/projects", projectsRoutes);
 app.use("/api/attendance", attendanceRoutes);
 app.use("/api/overtime", overtimeRoutes);
 app.use("/api/payroll", payrollRoutes);
+app.use("/api/profile", profileRoutes);
+app.use('/uploads', express.static('uploads'));
+app.use('/api/profile', require ('./routes/profileRoutes'));
 
 
 // ====== SERVER START ======
